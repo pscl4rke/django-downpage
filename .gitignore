@@ -1,2 +1,9 @@
+
+# Packaging
 __pycache__
 dist.*
+
+# Testing
+test-venv
+.coverage
+*.egg-info
