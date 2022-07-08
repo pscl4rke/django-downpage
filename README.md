@@ -64,16 +64,18 @@ that should be built:
 
     DOWNPAGE_PAGES = [
         ("502.html", "myapp/downpage_502.html"),
-        ("503.html", "myapp/downpage_503.html"),
+        ("503.html", "myapp/downpage_503.html", {"name", "Service Unavailable"}),
         ("504.html", "myapp/downpage_504.html"),
         # ...etc...
     ]
 
-The first element of the pair is the destination file that will
+The first element of the tuple is the destination file that will
 get built, relative to the `STATIC_ROOT` directory.
 The second element is the template name,
 and is compatible with any name that can be understood by
 the built-in `render(...)` shortcut.
+An optional third element defines extra context that will be supplied
+to the template when it is rendered.
 
 At this point you need to create your templates.
 A good starting point would be the pages served up for 404 or 500 errors.
