@@ -36,7 +36,10 @@ Usage:
 ------
 
 Before starting it is recommended to ensure that `handler404`
-and `handler500` error pages have already been configured.
+and `handler500` error pages have already been configured
+(as documented
+[here](https://docs.djangoproject.com/en/dev/topics/http/views/#customizing-error-views)
+and [here](https://docs.djangoproject.com/en/dev/ref/urls/)).
 Your templates from these views can serve as the basis for the
 templates that `downpage` will use.
 
@@ -73,15 +76,18 @@ The first element of the tuple is the destination file that will
 get built, relative to the `STATIC_ROOT` directory.
 The second element is the template name,
 and is compatible with any name that can be understood by
-the built-in `render(...)` shortcut.
+the `render(...)` function that is a
+[built-in shortcut](https://docs.djangoproject.com/en/dev/topics/http/shortcuts/#render).
 An optional third element defines extra context that will be supplied
 to the template when it is rendered.
 
 At this point you need to create your templates.
 A good starting point would be the pages served up for 404 or 500 errors.
-You can use the same template for each generated page if you wish.
-Also you can use new-style Jinja2 templates if you
-have set your site up to use them.
+You can use the same template for each generated page if you wish,
+using extra context to customise them.
+Also, if you have already set your site up to support the
+[new-style Jinja2 templates](https://docs.djangoproject.com/en/dev/topics/templates/#django.template.backends.jinja2.Jinja2)
+then they will work with no extra configuration needed.
 
 Now update whatever process you use for deployment.
 You presumably already call `manage.py collectstatic` as part of
