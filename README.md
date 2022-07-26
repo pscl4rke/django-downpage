@@ -44,7 +44,7 @@ Your templates from these views can serve as the basis for the
 templates that `downpage` will use.
 
 Install `django-downpage` from PyPI as with any
-other dependendency.
+other dependency.
 To quickly get started you might run:
 
     $ pip install django-downpage
@@ -101,4 +101,30 @@ The `downpagegenerate` management command is best run immediately after this:
 
 Then you need to set up your frontend server to be aware of these files.
 That will vary depending on the server you use.
+
+Example: Configuring an Nginx Frontend:
+---------------------------------------
+
+If your frontend webserver is Nginx then you presumably already
+have some config that looks something like this:
+
+    location /static {
+        alias /path/to/static.collected/;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://localhost:8000;
+    }
+
+So add in an `error_page` directive for each type of error that
+you want to handle:
+
+    location / {
+        include proxy_params;
+        proxy_pass http://localhost:8000;
+        error_page 502 /static/502.html;
+        error_page 503 /static/503.html;
+        error_page 504 /static/504.html;
+    }
 
