@@ -4,6 +4,6 @@ __pycache__
 dist.*
 
 # Testing
-test-venv
+venv.testing
 .coverage
 *.egg-info

@@ -1,16 +1,20 @@
 
-test: | test-venv
-	./test-venv/bin/coverage run --source=downpage -m unittest discover ./tests
-	./test-venv/bin/coverage report -m
+pre-release-checks:
+	pyroma .
 
-test-venv:
+test: | venv.testing
+	venv.testing/bin/coverage run -m unittest discover tests/
+	venv.testing/bin/coverage report -m
+
+venv.testing:
 	python3 -m venv $@
 	$@/bin/pip install -e '.[testing]'
 
 release:
 	test ! -d dist
 	python3 setup.py sdist bdist_wheel
-	ls -la dist
+	check-wheel-contents dist
+	twine check dist/*
 	PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring twine upload dist/*
 	mv -i build* *.egg-info dist/.
-	mv dist dist.$$(date +%Y%m%d.%H%M%S)
+	mv dist dist.$$(date +%Y-%m-%d.%H%M%S)
