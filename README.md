@@ -128,3 +128,9 @@ you want to handle:
         error_page 504 /static/504.html;
     }
 
+Postscript:
+-----------
+
+This code is licensed under the BSD three-clause licence.
+
+
