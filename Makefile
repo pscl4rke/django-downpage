@@ -11,12 +11,8 @@ venv.testing:
 	$@/bin/pip install -e '.[testing]'
 
 release: export PYTHON_KEYRING_BACKEND := keyring.backends.null.Keyring
-release: pyversion != python3 setup.py --version
-release: gitversion != git describe --tags
 release:
-	@echo 'Py version:  $(pyversion)'
-	@echo 'Git version: $(gitversion)'
-	test '$(pyversion)' = '$(gitversion)'
+	test '$(shell python3 setup.py --version)' = '$(shell git describe --tags)'
 	test ! -d dist
 	python3 setup.py sdist bdist_wheel
 	check-wheel-contents dist
