@@ -1,9 +1,11 @@
 
+testdir := tests
+
 pre-release-checks:
 	pyroma .
 
 test: | venv.testing
-	venv.testing/bin/coverage run -m unittest discover tests/
+	venv.testing/bin/coverage run -m unittest discover $(testdir)
 	venv.testing/bin/coverage report -m
 
 venv.testing:
@@ -50,5 +52,5 @@ test-in-container-%:
 		-W "/root" \
 		-S "cp -air ./src/* ." \
 		-S "pip --no-cache-dir install .[testing]" \
-		-S "coverage run -m unittest discover tests/" \
+		-S "coverage run -m unittest discover $(testdir)" \
 		-S "coverage report -m"
